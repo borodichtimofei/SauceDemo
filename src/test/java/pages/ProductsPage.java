@@ -2,6 +2,7 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
 public class ProductsPage extends BasePage {
@@ -14,6 +15,7 @@ public class ProductsPage extends BasePage {
     public static final By PRODUCT_PRICE = By.cssSelector(".inventory_details_price");
     public static final By PRODUCTS_PRICE = By.cssSelector(".inventory_item_price");
     public static final By PRODUCTS_NAME = By.cssSelector(".inventory_item_name");
+    public static final By PRODUCT_PAGE_TITLE = By.xpath("//span[text()='Products']");
 
 
     public ProductsPage(WebDriver driver) {
@@ -22,6 +24,11 @@ public class ProductsPage extends BasePage {
 
     public void open() {
         driver.get(baseUrl + "/inventory.html");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(PRODUCT_PAGE_TITLE));
+    }
+
+    public void waitForLoading(){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(PRODUCT_PAGE_TITLE));
     }
 
     public void addToCart(String product) {
@@ -32,7 +39,7 @@ public class ProductsPage extends BasePage {
         driver.findElement(By.xpath(String.format(productRemoveFromCart, product))).click();
     }
 
-    public void productsCheck(String product) {
+    public void openProduct(String product) {
         driver.findElement(By.xpath(String.format(productName, product))).click();
     }
 
@@ -40,16 +47,20 @@ public class ProductsPage extends BasePage {
         new Select(driver.findElement(SORT_BUTTON)).selectByVisibleText(sorting);
     }
 
-    public String priceProduct() {
+    public String getProductPrice() {
         return driver.findElement(PRODUCT_PRICE).getText();
     }
 
-    public String firstPositionSort() {
-        return driver.findElements(PRODUCTS_PRICE).get(0).getText();
+    public String getProductName(int index) {
+        return driver.findElements(PRODUCTS_NAME).get(index).getText();
     }
 
-    public String lastPositionSort() {
-        return driver.findElements(PRODUCTS_PRICE).get(5).getText();
+    public String getProductPrice(int index) {
+        return driver.findElements(PRODUCTS_PRICE).get(index).getText();
+    }
+
+    public String getTitle() {
+        return driver.findElement(PRODUCT_PAGE_TITLE).getText();
     }
 }
 
