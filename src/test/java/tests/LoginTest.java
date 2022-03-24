@@ -1,69 +1,44 @@
 package tests;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 
 public class LoginTest extends BaseTest {
 
-    @Test
-    public void passwordShouldBeRequired() {
-        loginPage.open();
-        loginPage.login("test", "");
-        assertEquals(loginPage.getError(), "Epic sadface: Password is required");
+    @DataProvider(name = "Входящие данные для негативных тестов на логин")
+    public Object[][] loginDataNegative() {
+        return new Object[][]{
+                {"test", "", "Epic sadface: Password is required"},
+                {"", "test", "Epic sadface: Username is required"},
+                {"locked_out_user", PASSWORD, "Epic sadface: Sorry, this user has been locked out."},
+                {USER, "test", "Epic sadface: Username and password do not match any user in this service"},
+                {"test", PASSWORD, "Epic sadface: Username and password do not match any user in this service"}
+        };
     }
 
-    @Test
-    public void userNameShouldBeRequired() {
-        loginPage.open();
-        loginPage.login("", "test");
-        assertEquals(loginPage.getError(), "Epic sadface: Username is required");
+    @DataProvider(name = "Входящие данные для позитивных тестов на логин")
+    public Object[][] loginDataPositive() {
+        return new Object[][]{
+                {USER, PASSWORD, "PRODUCTS"},
+                {"problem_user", PASSWORD, "PRODUCTS"},
+                {"performance_glitch_user", PASSWORD, "PRODUCTS"},
+        };
     }
 
-    @Test
-    public void standardUserShouldBeLoggedIn() {
+    @Test(dataProvider = "Входящие данные для негативных тестов на логин", retryAnalyzer = Retry.class)
+    public void ifTheDataIsIncorrectLoginShouldNotBePerformed(String user, String password, String error) {
         loginPage.open();
-        loginPage.login(USER, PASSWORD);
-        productsPage.waitForLoading();
-        assertEquals(productsPage.getTitle(), "PRODUCTS");
+        loginPage.login(user, password);
+        assertEquals(loginPage.getError(), error, "Message error is not correct");
     }
 
-    @Test
-    public void lockedOutUserUserShouldBeLockedOut() {
+    @Test(dataProvider = "Входящие данные для позитивных тестов на логин")
+    public void withCorrectDataLoginShouldBePerformed(String user, String password, String titlePage) {
         loginPage.open();
-        loginPage.login("locked_out_user", PASSWORD);
-        assertEquals(loginPage.getError(), "Epic sadface: Sorry, this user has been locked out.");
+        loginPage.login(user, password);
+        assertEquals(productsPage.getTitle(), titlePage, "Login failed");
     }
-
-    @Test
-    public void wrongUserNameShouldNotLogin() {
-        loginPage.open();
-        loginPage.login("test", PASSWORD);
-        assertEquals(loginPage.getError(), "Epic sadface: Username and password do not match any user in this service");
-    }
-
-    @Test
-    public void wrongPasswordShouldNotLogin() {
-        loginPage.open();
-        loginPage.login(USER, "test");
-        assertEquals(loginPage.getError(), "Epic sadface: Username and password do not match any user in this service");
-    }
-
-    @Test
-    public void problemUserShouldBeLoggedIn() {
-        loginPage.open();
-        loginPage.login("problem_user", PASSWORD);
-        productsPage.waitForLoading();
-        assertEquals(productsPage.getTitle(), "PRODUCTS");
-    }
-
-    @Test
-    public void performanceGlitchUserShouldBeLoggedIn() {
-        loginPage.open();
-        loginPage.login("performance_glitch_user", PASSWORD);
-        productsPage.waitForLoading();
-        assertEquals(productsPage.getTitle(), "PRODUCTS");
-    }
-
 }
 

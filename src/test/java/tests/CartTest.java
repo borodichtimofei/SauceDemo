@@ -6,7 +6,7 @@ import static org.testng.Assert.assertEquals;
 
 public class CartTest extends BaseTest {
 
-    @Test
+    @Test(description = "Проверка, что количество продуктов корректно отображается в CART при добавлении/удалении")
     public void productsShouldBeAddedInToCart() {
         loginPage.open();
         loginPage.login(USER, PASSWORD);
@@ -18,8 +18,8 @@ public class CartTest extends BaseTest {
         assertEquals(cartPage.getProductCount(), 2);
     }
 
-    @Test
-    public void continueShoppingShouldReturnTheProductsPage (){
+    @Test(description = "Проверка, что при нажатии кнопки RETURN происходит возвращение на странцу продуктов")
+    public void continueShoppingShouldReturnTheProductsPage() {
         loginPage.open();
         loginPage.login(USER, PASSWORD);
         navigationPage.clickCart();

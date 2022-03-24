@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Regression Suite" >
+    <test name="Cart">
+        <classes>
+            <class name="tests.CartTest">
+            </class>
+        </classes>
+    </test>
+    <test name="Checkout">
+        <classes>
+            <class name="tests.CheckoutTest">
+            </class>
+        </classes>
+    </test>
+    <test name="Login">
+        <classes>
+            <class name="tests.LoginTest">
+            </class>
+        </classes>
+    </test>
+    <test name="Navigation">
+        <classes>
+            <class name="tests.NavigationTest">
+            </class>
+        </classes>
+    </test>
+    <test name="Products">
+        <classes>
+            <class name="tests.ProductsTest">
+            </class>
+        </classes>
+    </test>
+</suite>
+
