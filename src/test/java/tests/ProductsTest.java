@@ -7,7 +7,7 @@ import static org.testng.Assert.assertEquals;
 
 public class ProductsTest extends BaseTest {
 
-    @Test
+    @Test(description = "Проверка, что при выборе продукта открывается страница с детализацией продукта")
     public void clickingOnProductShouldOpenTheProductPage() {
         loginPage.open();
         loginPage.login(USER, PASSWORD);
@@ -15,7 +15,7 @@ public class ProductsTest extends BaseTest {
         assertEquals(productsPage.getProductPrice(), "$29.99");
     }
 
-    @Test
+    @Test(description = "Проверка, что корректно выполняется сортировка: Name (A to Z) ")
     public void sortByNameAscending() {
         loginPage.open();
         loginPage.login(USER, PASSWORD);
@@ -24,7 +24,7 @@ public class ProductsTest extends BaseTest {
         assertEquals(productsPage.getProductName(5), "Test.allTheThings() T-Shirt (Red)");
     }
 
-    @Test
+    @Test(description = "Проверка, что корректно выполняется сортировка: Name (Z to A) ")
     public void sortByNameDescending() {
         loginPage.open();
         loginPage.login(USER, PASSWORD);
@@ -33,7 +33,7 @@ public class ProductsTest extends BaseTest {
         assertEquals(productsPage.getProductName(5), "Sauce Labs Backpack");
     }
 
-    @Test
+    @Test(description = "Проверка, что корректно выполняется сортировка: Price (low to high) ")
     public void sortByPriceAscending() {
         loginPage.open();
         loginPage.login(USER, PASSWORD);
@@ -42,7 +42,7 @@ public class ProductsTest extends BaseTest {
         assertEquals(productsPage.getProductPrice(5), "$49.99");
     }
 
-    @Test
+    @Test(description = "Проверка, что корректно выполняется сортировка: Price (high to low) ")
     public void sortByPriceDescending() {
         loginPage.open();
         loginPage.login(USER, PASSWORD);

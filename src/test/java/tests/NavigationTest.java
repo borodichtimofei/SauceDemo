@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 
 public class NavigationTest extends BaseTest {
 
-    @Test
+    @Test(description = "Проверка, что количество продуктов корректно отображается в элементе Корзина при добавлении/удалении")
     public void inCartShouldDisplayTheQuantityProductsAdded() {
         loginPage.open();
         loginPage.login(USER, PASSWORD);
