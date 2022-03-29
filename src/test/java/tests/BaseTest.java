@@ -23,7 +23,7 @@ public class BaseTest {
     CheckoutOverviewPage checkoutOverviewPage;
     CheckOutCompletePage checkOutCompletePage;
 
-    public static final String USER = "standard_user";
+    public static final String USER = "standard_user"; //System.getProperty("user");
     public static final String PASSWORD = "secret_sauce";
 
     @Parameters({"browser"})
