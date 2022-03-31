@@ -9,21 +9,29 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <testng.version>7.5</testng.version>
+        <testng.version>7.4.0</testng.version>
         <selenium.version>4.1.2</selenium.version>
         <webdrivermanager.version>5.1.0</webdrivermanager.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <suiteXmlFile>src/test/resources/regression.xml</suiteXmlFile>
+        <suiteXmlFile>src/test/resources/alternate.xml</suiteXmlFile>
     </properties>
 
     <build>
             <plugins>
-                <plugin>
+        <plugin>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-maven</artifactId>
+            <version>2.10.0</version>
+        </plugin>
+        <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>3.0.0-M5</version>
                     <configuration>
+                        <argLine>
+                            -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/1.9.6/aspectjweaver-1.9.6.jar -Xmx256m
+                        </argLine>
                         <suiteXmlFiles>
                             <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
                         </suiteXmlFiles>
@@ -31,8 +39,19 @@
                 </plugin>
             </plugins>
     </build>
-
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-testng -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>2.13.9</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.9.6</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.testng/testng -->
         <dependency>
             <groupId>org.testng</groupId>

@@ -15,6 +15,7 @@ public class BasePage {
         this.driver = driver;
         wait = new WebDriverWait(driver, 10);
     }
+
     public void waitForPageLoaded() {
         new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver driver) {
@@ -22,6 +23,5 @@ public class BasePage {
             }
         };
     }
-
 
 }

@@ -10,7 +10,7 @@ public class LoginTest extends BaseTest {
     @DataProvider(name = "Входящие данные для негативных тестов на логин")
     public Object[][] loginDataNegative() {
         return new Object[][]{
-                {"test", "", "Epic sadface: Password is required"},
+                {"test", "", "Epic sadface: Password is "},
                 {"", "test", "Epic sadface: Username is required"},
                 {"locked_out_user", PASSWORD, "Epic sadface: Sorry, this user has been locked out."},
                 {USER, "test", "Epic sadface: Username and password do not match any user in this service"},
@@ -27,14 +27,14 @@ public class LoginTest extends BaseTest {
         };
     }
 
-    @Test(dataProvider = "Входящие данные для негативных тестов на логин", retryAnalyzer = Retry.class)
+    @Test(description = "Проверка логина с негативными данными", dataProvider = "Входящие данные для негативных тестов на логин", retryAnalyzer = Retry.class)
     public void ifTheDataIsIncorrectLoginShouldNotBePerformed(String user, String password, String error) {
         loginPage.open();
         loginPage.login(user, password);
         assertEquals(loginPage.getError(), error, "Message error is not correct");
     }
 
-    @Test(dataProvider = "Входящие данные для позитивных тестов на логин")
+    @Test(description = "Проверка логина с позитивными данными", dataProvider = "Входящие данные для позитивных тестов на логин")
     public void withCorrectDataLoginShouldBePerformed(String user, String password, String titlePage) {
         loginPage.open();
         loginPage.login(user, password);
