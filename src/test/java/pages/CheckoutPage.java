@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -18,11 +19,13 @@ public class CheckoutPage extends BasePage {
         super(driver);
     }
 
+    @Step("Opening checkout page")
     public void open() {
         driver.get(baseUrl + "/checkout-step-one.html");
         wait.until(ExpectedConditions.visibilityOfElementLocated(FIRST_NAME_INPUT));
     }
 
+    @Step("Input data First name: '{firstName}', Last name: '{lastName}' and ZipCode: '{zipCode}'")
     public void fillInCheckoutInfo(String firstName, String lastName, String zipCode) {
         driver.findElement(FIRST_NAME_INPUT).sendKeys(firstName);
         driver.findElement(LAST_NAME_INPUT).sendKeys(lastName);
@@ -30,10 +33,12 @@ public class CheckoutPage extends BasePage {
         driver.findElement(CONTINUE_BUTTON).click();
     }
 
+    @Step("Getting error message")
     public String getError() {
         return driver.findElement(ERROR_MASSAGE).getText();
     }
 
+    @Step("Click the button 'Checkout'")
     public void cancel(){
         driver.findElement(CANCEL_BUTTON).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("checkout")));
