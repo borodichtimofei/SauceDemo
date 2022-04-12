@@ -15,14 +15,4 @@
             <class name="tests.NavigationTest"/>
         </classes>
     </test>
-    <test name="firefox">
-        <parameter name="browser" value="firefox"/>
-        <classes>
-            <class name="tests.CartTest"/>
-            <class name="tests.CheckoutTest"/>
-            <class name="tests.LoginTest"/>
-            <class name="tests.ProductsTest"/>
-            <class name="tests.NavigationTest"/>
-        </classes>
-    </test>
     </suite>
