@@ -10,7 +10,7 @@ public class LoginTest extends BaseTest {
     @DataProvider(name = "Входящие данные для негативных тестов на логин")
     public Object[][] loginDataNegative() {
         return new Object[][]{
-                {"test", "", "Epic sadface: Epic sadface: Password is required"},
+                {"test", "", "Epic sadface: Password is required"},
                 {"", "test", "Epic sadface: Username is required"},
                 {"locked_out_user", PASSWORD, "Epic sadface: Sorry, this user has been locked out."},
                 {USER, "test", "Epic sadface: Username and password do not match any user in this service"},
