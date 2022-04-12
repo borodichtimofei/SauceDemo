@@ -3,6 +3,7 @@ package tests;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.ITestContext;
@@ -30,17 +31,18 @@ public class BaseTest {
 
     @Parameters({"browser"})
     @BeforeMethod (description = "Opening browser")
-    public void setup(String browser, ITestContext testContext) throws MalformedURLException {
+       public void setup(String browser, ITestContext testContext) throws MalformedURLException {
         if (browser.equalsIgnoreCase("chrome")){
             WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--headless");
+            driver = new ChromeDriver(options);
         } else if (browser.equalsIgnoreCase("edge")){
             WebDriverManager.edgedriver().setup();
             driver = new EdgeDriver();
-        } else if (browser.equalsIgnoreCase("firefox")){
-            WebDriverManager.firefoxdriver().setup();
-            driver = new FirefoxDriver();
         }
+
+
 
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -60,9 +62,10 @@ public class BaseTest {
 
     @AfterMethod(alwaysRun = true, description = "Closing browser")
     public void close() {
-        driver.quit();
+        if(driver != null) {
+            driver.quit();
+        }
     }
-
 }
 
 
