@@ -35,7 +35,8 @@ public class BaseTest {
         if (browser.equalsIgnoreCase("chrome")){
             WebDriverManager.chromedriver().setup();
             ChromeOptions options = new ChromeOptions();
-            options.addArguments("--headless");
+            if(System.getProperty("headless", "true").equals("true"))
+                options.addArguments("--headless");
             driver = new ChromeDriver(options);
         } else if (browser.equalsIgnoreCase("edge")){
             WebDriverManager.edgedriver().setup();
@@ -57,7 +58,6 @@ public class BaseTest {
         checkOutCompletePage = new CheckOutCompletePage(driver);
 
         testContext.setAttribute("driver", driver);
-
     }
 
     @AfterMethod(alwaysRun = true, description = "Closing browser")
